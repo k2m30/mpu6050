@@ -6,5 +6,5 @@ configure do
 end
 
 get '/' do
-  settings.mpu.measure
+  settings.mpu.measure.to_s
 end
