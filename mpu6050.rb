@@ -57,7 +57,8 @@ class MPU6050
     rotation_x = get_x_rotation(acceleration_x, acceleration_y, acceleration_z)
     rotation_y = get_y_rotation(acceleration_x, acceleration_y, acceleration_z)
 
-    {gyro_x: gyro_x, gyro_y: gyro_y, gyro_z: gyro_z, rotation_x: rotation_x, rotation_y: rotation_y}
+    # {gyro_x: gyro_x, gyro_y: gyro_y, gyro_z: gyro_z, rotation_x: rotation_x, rotation_y: rotation_y}
+    "#{rotation_x} #{rotation_y}"
   end
 
   private
