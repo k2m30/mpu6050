@@ -78,6 +78,3 @@ class MPU6050
   end
 
 end
-
-mpu = MPU6050.new '/home/pi/wiringPi/wiringPi/libwiringPi.so.2.25'
-mpu.measure
