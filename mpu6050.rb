@@ -37,7 +37,7 @@ class MPU6050
 
     @last_x = 0
     @last_y = 0
-    @k = 0.15
+    @k = 0.30
 
   end
 
