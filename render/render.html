@@ -7,55 +7,56 @@
     <script src="raphael3d.src.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+<div id="rotation_x"></div>
+<div id="rotation_y"></div>
+<div id="canvas"></div>
 <script type="text/javascript" charset="utf-8">
-    var scene = null;
-    var viewer = null;
-    var id;
-    r = new XMLHttpRequest();
+    var scene, viewer;
+    var rotationX = 0, rotationY = 0;
+    var divX = document.getElementById('rotation_x');
+    var divY = document.getElementById('rotation_y');
 
     function rotate(x, y, z){
         scene.camera.rotateX(x).rotateZ(y).rotateY(z);
         viewer.update();
     }
 
-    function go(){
-
-    }
-
-    function stopTimer(){
-        clearInterval(mainTimerID);
-    }
-
     function getAngles(){
-        if (r.readyState != 4 || r.status != 200) return;
-        console.log(r.responseText);
+        var r = new XMLHttpRequest();
+        r.open('get','http://192.168.0.102:4567', true);
+        r.send();
+        r.onreadystatechange = function(){
+            if (r.readyState != 4 || r.status != 200) return;
+            var angles = r.responseText.split(' ');
+
+            divX.textContent = angles[0];
+            divY.textContent = angles[1];
+
+            x_deg = Math.PI * (parseFloat(angles[0]) - rotationX)/ 180;
+            y_deg = Math.PI * (parseFloat(angles[1]) - rotationY)/ 180;
+
+            rotate(x_deg, y_deg, 0);
+            rotationX = parseFloat(angles[0]);
+            rotationY = parseFloat(angles[1]);
+        }
     }
 
     window.onload = function() {
-        var paper = Raphael('canvas', 400, 400);
-        var mat = new Raphael3d.Material('#ff0', '#0ff');
-        var cube = Raphael3d.Surface.Box(0., 0., 0., 2., 3., 0.2, paper, {});
+        var paper = Raphael('canvas', 1000, 800);
+        var mat = new Raphael3d.Material('#363', '#030');
+        var cube = Raphael3d.Surface.Box(0., 0., 0., 5., 4., 0.2, paper, {});
         scene = new Raphael3d.Scene(paper);
         scene.setMaterial(mat).addSurfaces(cube);
-        scene.projection = Raphael3d.Matrix4x4.PerspectiveMatrixZ(500);
-        viewer = paper.Viewer(25, 25, 350, 350, {opacity: 0});
+        scene.projection = Raphael3d.Matrix4x4.PerspectiveMatrixZ(900);
+        viewer = paper.Viewer(45, 45, 998, 798, {opacity: 0});
         viewer.setScene(scene).fit();
-        scene.camera.rotateX(2.).rotateZ(-.2).rotateY(.5);
-        viewer.update();
+        rotate(-1.5,0.2, 0);
 
-        r.open('GET', 'http://192.168.0.102:4567');
-        r.setRequestHeader('Access-Control-Allow-Origin', '*');
-        r.send();
-        r.onreadystatechange = getAngles();
-
-        mainTimerID = setInterval(go, 500);
-        var canvas = document.getElementById('canvas');
-        canvas.onclick = stopTimer;
-
-
-
+        var timer = setInterval(getAngles, 100);
+        document.getElementById('canvas').onclick = function(){
+            clearInterval(timer);
+        }
     }
 </script>
-<div id="canvas"></div>
 </body>
 </html>
