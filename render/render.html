@@ -44,7 +44,7 @@
     window.onload = function() {
         var paper = Raphael('canvas', 1000, 800);
         var mat = new Raphael3d.Material('#363', '#030');
-        var cube = Raphael3d.Surface.Box(0., 0., 0., 5., 4., 0.2, paper, {});
+        var cube = Raphael3d.Surface.Box(0, 0, 0, 5, 4, 0.15, paper, {});
         scene = new Raphael3d.Scene(paper);
         scene.setMaterial(mat).addSurfaces(cube);
         scene.projection = Raphael3d.Matrix4x4.PerspectiveMatrixZ(900);
