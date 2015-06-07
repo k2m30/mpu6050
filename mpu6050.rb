@@ -1,6 +1,7 @@
 require 'fiddle'
 
 class MPU6050
+  attr_reader :last_x, :last_y, :k
   def initialize(path_to_wiring_pi_so)
     wiringpi = Fiddle.dlopen(path_to_wiring_pi_so)
 
@@ -34,6 +35,10 @@ class MPU6050
     @fd = @i2c_setup.call 0x68
     @i2c_write_reg8.call @fd, 0x6B, 0x00
 
+    @last_x = 0
+    @last_y = 0
+    @k = 0.15
+
   end
 
   def read_word_2c(fd, addr)
@@ -54,8 +59,11 @@ class MPU6050
     acceleration_y = read_word_2c(@fd, 0x3d) / 16384.0
     acceleration_z = read_word_2c(@fd, 0x3f) / 16384.0
 
-    rotation_x = get_x_rotation(acceleration_x, acceleration_y, acceleration_z)
-    rotation_y = get_y_rotation(acceleration_x, acceleration_y, acceleration_z)
+    rotation_x = k * get_x_rotation(acceleration_x, acceleration_y, acceleration_z) + (1-k) * @last_x
+    rotation_y = k * get_y_rotation(acceleration_x, acceleration_y, acceleration_z) + (1-k) * @last_y
+
+    @last_x = rotation_x
+    @last_y = rotation_y
 
     # {gyro_x: gyro_x, gyro_y: gyro_y, gyro_z: gyro_z, rotation_x: rotation_x, rotation_y: rotation_y}
     "#{rotation_x.round(1)} #{rotation_y.round(1)}"
