@@ -6,5 +6,6 @@ configure do
 end
 
 get '/' do
+  response['Access-Control-Allow-Origin'] = '*'
   settings.mpu.measure.to_s
 end
