@@ -52,9 +52,3 @@ class HCSRO4
     (finish - start)/58
   end
 end
-
-hc = HCSRO4.new('/home/pi/wiringPi/wiringPi/libwiringPi.so.2.25')
-
-sleep 2
-
-p hc.measure
