@@ -30,7 +30,7 @@ class HCSRO4
     # extern void digitalWrite        (int pin, int value) ;
     @digital_write = Fiddle::Function.new(wiringpi['digitalWrite'], [int, int], void)
 
-    @setup.call
+    @setup.call nil
     @pin_mode.call TRIG, OUT
     @pin_mode.call ECHO, IN
   end
