@@ -1,6 +1,7 @@
 require 'fiddle'
 
 class HCSRO4
+  attr_accessor :digital_read, :digital_write, :pin_mode
   IN = 0
   OUT = 1
 
