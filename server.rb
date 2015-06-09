@@ -9,5 +9,5 @@ end
 
 get '/' do
   response['Access-Control-Allow-Origin'] = '*'
-  settings.mpu.measure.to_s + ' ' + settings.hc.measure.to_s
+  settings.mpu.measure.to_s + ' ' + settings.hc.measure(17, 27).to_s
 end
