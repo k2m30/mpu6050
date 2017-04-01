@@ -3,8 +3,8 @@ require_relative 'mpu6050'
 require_relative 'hcsro4'
 
 configure do
-  set :mpu, MPU6050.new('/home/pi/wiringPi/wiringPi/libwiringPi.so.2.25')
-  set :hc, HCSRO4.new('/home/pi/wiringPi/wiringPi/libwiringPi.so.2.25')
+  set :mpu, MPU6050.new('/home/pi/wiringPi/wiringPi/libwiringPi.so.2.44')
+  # set :hc, HCSRO4.new('/home/pi/wiringPi/wiringPi/libwiringPi.so.2.44')
 end
 
 get '/' do
