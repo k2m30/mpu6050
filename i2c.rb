@@ -52,5 +52,5 @@ case ARGV[0]
     puts i2c.read
   else
     puts "write #{ARGV[1]}"
-    puts i2c.write(ARGV[1])
+    puts i2c.write(ARGV[1].to_i)
 end
