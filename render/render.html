@@ -23,7 +23,7 @@
 
     function getAngles(){
         var r = new XMLHttpRequest();
-        r.open('get','http://192.168.0.102:4567', true);
+        r.open('get','http://192.168.128.139:4567', true);
         r.send();
         r.onreadystatechange = function(){
             if (r.readyState != 4 || r.status != 200) return;
