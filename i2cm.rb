@@ -1,6 +1,7 @@
 require 'fiddle'
 
-class I2C
+
+class I2Cm
   attr_accessor :fd, :i2c_read, :i2c_write
 
   def initialize(path_to_wiring_pi_so='/home/pi/wiringPi/wiringPi/libwiringPi.so.2.44')
@@ -45,7 +46,7 @@ class I2C
   end
 end
 
-i2c = I2C.new
+i2c = I2Cm.new
 case ARGV[0]
   when 'read'
     puts 'read'
