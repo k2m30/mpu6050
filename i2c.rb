@@ -19,7 +19,7 @@ i2c = I2Cg.new
 case ARGV[0]
   when 'read'
     p 'read'
-    p i2c.read ARGV[1] || 1
+    p i2c.read ARGV[1].to_i || 1
   else
     puts "write #{ARGV[1]}"
     puts i2c.write(ARGV[1].to_i)
